@@ -94,10 +94,11 @@ module.exports = require('./webpack.base.babel')({
     new OfflinePlugin({
       relativePaths: false,
       publicPath: '/',
-      appShell: '/',
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
+      // Also exclude the functions routes as they are handled by google
+      // cloud functions
       excludes: ['.htaccess'],
 
       caches: {

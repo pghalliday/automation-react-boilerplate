@@ -5,6 +5,8 @@
  */
 module.exports = (app, options) => {
   const isProd = process.env.NODE_ENV === 'production';
+  const addFirebaseFunctionsMiddlewares = require('./firebaseFunctionsMiddlewares');
+  addFirebaseFunctionsMiddlewares(app);
 
   if (isProd) {
     const addProdMiddlewares = require('./addProdMiddlewares');
