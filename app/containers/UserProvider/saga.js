@@ -4,7 +4,6 @@ import {
   subscribeToAuthStateChange,
   logout,
   login,
-  getLoginResult,
 } from '../../utils/firebase';
 import { setLoginStateAction } from './actions';
 import { LOGOUT, LOGIN } from './constants';
@@ -50,8 +49,7 @@ export function* loginSaga() {
   yield takeEvery(LOGIN, doLogin);
 }
 
-export default function* appSaga() {
-  getLoginResult();
+export default function* userProviderSaga() {
   yield fork(loginStateSaga);
   yield fork(logoutSaga);
   yield fork(loginSaga);

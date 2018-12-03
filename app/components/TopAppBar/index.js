@@ -20,6 +20,8 @@ import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import withUser from '../../utils/withUser';
+
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -101,4 +103,4 @@ TopAppBar.propTypes = {
   onLogoutClick: PropTypes.func,
 };
 
-export default injectIntl(TopAppBar);
+export default injectIntl(withUser(TopAppBar));

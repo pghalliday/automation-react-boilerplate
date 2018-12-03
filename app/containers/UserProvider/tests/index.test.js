@@ -2,9 +2,9 @@
 // import { mount } from 'enzyme';
 // import { enzymeFind } from 'styled-components/test-utils';
 
-// import LoginProgress from '../index';
+// import { UserProvider } from '../index';
 
-describe('<LoginProgress />', () => {
+describe('<UserProvider />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

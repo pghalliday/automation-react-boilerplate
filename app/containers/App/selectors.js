@@ -14,7 +14,4 @@ const selectAppDomain = state => state.get('app', initialState);
 const makeSelectIsDrawerOpen = () =>
   createSelector(selectAppDomain, substate => substate.get('isDrawerOpen'));
 
-const makeSelectLoginState = () =>
-  createSelector(selectAppDomain, substate => substate.get('loginState'));
-
-export { selectAppDomain, makeSelectIsDrawerOpen, makeSelectLoginState };
+export { selectAppDomain, makeSelectIsDrawerOpen };
