@@ -13,4 +13,12 @@ export default defineMessages({
     id: `${scope}.title`,
     defaultMessage: 'This is the TopAppBar container!',
   },
+  login: {
+    id: `${scope}.login`,
+    defaultMessage: 'This is the login tooltip!',
+  },
+  logout: {
+    id: `${scope}.login`,
+    defaultMessage: 'This is the logout tooltip!',
+  },
 });

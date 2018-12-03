@@ -6,10 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ShiftingAppBar from 'components/ShiftingAppBar';
 import StyledToolbar from 'components/StyledToolbar';
@@ -17,19 +14,29 @@ import MenuButton from 'components/MenuButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import TitleTypography from 'components/TitleTypography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import PersonIcon from '@material-ui/icons/Person';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import injectSaga from 'utils/injectSaga';
-import injectReducer from 'utils/injectReducer';
-import makeSelectTopAppBar from './selectors';
-import reducer from './reducer';
-import saga from './saga';
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export class TopAppBar extends React.PureComponent {
   render() {
+    const loginButton = (
+      <Tooltip title={this.props.intl.formatMessage(messages.login)}>
+        <IconButton color="inherit" onClick={this.props.onLoginClick}>
+          <PersonOutlineIcon />
+        </IconButton>
+      </Tooltip>
+    );
+    const logoutButton = (
+      <Tooltip title={this.props.intl.formatMessage(messages.logout)}>
+        <IconButton color="inherit" onClick={this.props.onLogoutClick}>
+          <PersonIcon />
+        </IconButton>
+      </Tooltip>
+    );
     return (
       <ShiftingAppBar
         position="absolute"
@@ -45,14 +52,15 @@ export class TopAppBar extends React.PureComponent {
           >
             <MenuIcon />
           </MenuButton>
-          <TitleTypography component="h1" variant="h6" color="inherit" noWrap>
+          <TitleTypography
+            component="h1"
+            variant="title"
+            color="inherit"
+            noWrap
+          >
             <FormattedMessage {...messages.title} />
           </TitleTypography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          {this.props.isLoggedIn ? logoutButton : loginButton}
         </StyledToolbar>
       </ShiftingAppBar>
     );
@@ -60,32 +68,13 @@ export class TopAppBar extends React.PureComponent {
 }
 
 TopAppBar.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
   shifted: PropTypes.bool,
   shift: PropTypes.number,
+  isLoggedIn: PropTypes.bool,
   onMenuClick: PropTypes.func,
+  onLoginClick: PropTypes.func,
+  onLogoutClick: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  topAppBar: makeSelectTopAppBar(),
-});
-
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-const withReducer = injectReducer({ key: 'topAppBar', reducer });
-const withSaga = injectSaga({ key: 'topAppBar', saga });
-
-export default compose(
-  withReducer,
-  withSaga,
-  withConnect,
-)(TopAppBar);
+export default injectIntl(TopAppBar);

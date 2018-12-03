@@ -20,7 +20,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 
 import RootDiv from 'components/RootDiv';
-import TopAppBar from 'containers/TopAppBar/Loadable';
+import TopAppBar from 'components/TopAppBar';
 import LeftDrawer from 'containers/LeftDrawer/Loadable';
 import ContentMain from 'components/ContentMain';
 import HomePage from 'containers/HomePage/Loadable';

@@ -24,7 +24,7 @@ import messages from './messages';
 export class OtherPage extends React.PureComponent {
   render() {
     return (
-      <Typography variant="h4" gutterBottom component="h2">
+      <Typography variant="display1" gutterBottom component="h2">
         <FormattedMessage {...messages.header} />
       </Typography>
     );
