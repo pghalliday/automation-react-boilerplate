@@ -3,7 +3,7 @@
   "app.containers.App.otherTitle": "Other",
   "app.containers.TopAppBar.title": "Automation",
   "app.containers.TopAppBar.login": "Login",
-  "app.containers.TopAppBar.logout": "Logout",
+  "app.containers.TopAppBar.logout": "Logout - {user}",
   "app.containers.HomePage.header": "Home **",
   "app.containers.OtherPage.header": "Other **",
   "app.containers.NotFoundPage.header": "Unknown Page"

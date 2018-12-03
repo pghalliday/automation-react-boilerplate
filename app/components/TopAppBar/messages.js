@@ -18,7 +18,7 @@ export default defineMessages({
     defaultMessage: 'This is the login tooltip!',
   },
   logout: {
-    id: `${scope}.login`,
-    defaultMessage: 'This is the logout tooltip!',
+    id: `${scope}.logout`,
+    defaultMessage: 'This is the logout tooltip! - {user}',
   },
 });

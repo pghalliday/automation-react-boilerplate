@@ -20,7 +20,7 @@ import messages from './messages';
 export default class NotFound extends React.PureComponent {
   render() {
     return (
-      <Typography variant="display1" gutterBottom component="h2">
+      <Typography variant="h4" gutterBottom component="h2">
         <FormattedMessage {...messages.header} />
       </Typography>
     );

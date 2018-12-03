@@ -15,14 +15,29 @@ import MenuIcon from '@material-ui/icons/Menu';
 import TitleTypography from 'components/TitleTypography';
 import IconButton from '@material-ui/core/IconButton';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import PersonIcon from '@material-ui/icons/Person';
 import Tooltip from '@material-ui/core/Tooltip';
+import Badge from '@material-ui/core/Badge';
+import Avatar from '@material-ui/core/Avatar';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export class TopAppBar extends React.PureComponent {
   render() {
+    const loginErrorButton = error => {
+      console.log(error);
+      return (
+        <Tooltip title={this.props.intl.formatMessage(messages.login)}>
+          <IconButton color="inherit" onClick={this.props.onLoginClick}>
+            <Badge badgeContent="!" color="secondary">
+              <PersonOutlineIcon />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+      );
+    };
+    const pendingIcon = <CircularProgress color="secondary" />;
     const loginButton = (
       <Tooltip title={this.props.intl.formatMessage(messages.login)}>
         <IconButton color="inherit" onClick={this.props.onLoginClick}>
@@ -30,13 +45,27 @@ export class TopAppBar extends React.PureComponent {
         </IconButton>
       </Tooltip>
     );
-    const logoutButton = (
-      <Tooltip title={this.props.intl.formatMessage(messages.logout)}>
-        <IconButton color="inherit" onClick={this.props.onLogoutClick}>
-          <PersonIcon />
-        </IconButton>
+    const logoutButton = user => (
+      <Tooltip
+        title={this.props.intl.formatMessage(messages.logout, {
+          user: user.displayName,
+        })}
+      >
+        <Avatar src={user.photoURL} onClick={this.props.onLogoutClick} />
       </Tooltip>
     );
+    const userIcon = loginState => {
+      if (loginState.error) {
+        return loginErrorButton(loginState.error);
+      }
+      if (loginState.user) {
+        return logoutButton(loginState.user);
+      }
+      if (loginState.loggedOut) {
+        return loginButton;
+      }
+      return pendingIcon;
+    };
     return (
       <ShiftingAppBar
         position="absolute"
@@ -52,15 +81,10 @@ export class TopAppBar extends React.PureComponent {
           >
             <MenuIcon />
           </MenuButton>
-          <TitleTypography
-            component="h1"
-            variant="title"
-            color="inherit"
-            noWrap
-          >
+          <TitleTypography component="h1" variant="h6" color="inherit" noWrap>
             <FormattedMessage {...messages.title} />
           </TitleTypography>
-          {this.props.isLoggedIn ? logoutButton : loginButton}
+          {userIcon(this.props.loginState)}
         </StyledToolbar>
       </ShiftingAppBar>
     );
@@ -71,7 +95,7 @@ TopAppBar.propTypes = {
   intl: intlShape.isRequired,
   shifted: PropTypes.bool,
   shift: PropTypes.number,
-  isLoggedIn: PropTypes.bool,
+  loginState: PropTypes.any,
   onMenuClick: PropTypes.func,
   onLoginClick: PropTypes.func,
   onLogoutClick: PropTypes.func,

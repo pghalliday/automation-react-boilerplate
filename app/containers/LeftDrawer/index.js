@@ -37,7 +37,7 @@ export class LeftDrawer extends React.PureComponent {
         key={page.route}
         button
         selected={this.props.location.pathname === page.route}
-        onClick={() => this.props.dispatch(push(page.route))}
+        onClick={() => this.props.pushPage(page)}
       >
         <ListItemIcon>{page.icon}</ListItemIcon>
         <ListItemText primary={this.props.intl.formatMessage(page.name)} />
@@ -62,7 +62,7 @@ export class LeftDrawer extends React.PureComponent {
 }
 
 LeftDrawer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  pushPage: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.any.isRequired,
   pages: PropTypes.array.isRequired,
@@ -77,7 +77,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    pushPage: page => dispatch(push(page.route)),
   };
 }
 
@@ -93,6 +93,9 @@ export default compose(
   injectIntl,
   withReducer,
   withSaga,
-  withConnect,
+  // important to include withRouter before withConnect
+  // otherwise route changes will not result in the
+  // location property being updated
   withRouter,
+  withConnect,
 )(LeftDrawer);
