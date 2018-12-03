@@ -21,3 +21,13 @@ export const logout = () => firebase.auth().signOut();
 
 export const login = () =>
   firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+
+export const getLoginResult = () => {
+  return firebase.auth().getRedirectResult().then(result => {
+    console.log('getRedirectResult success');
+    console.log(result);
+  }).catch(error => {
+    console.log('getRedirectResult failure');
+    console.log(error);
+  });
+};
