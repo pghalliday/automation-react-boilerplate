@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
+import { withRouter } from 'react-router';
 import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -27,7 +28,6 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectLeftDrawer from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectPathname } from '../../utils/routerSelectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class LeftDrawer extends React.PureComponent {
@@ -36,7 +36,7 @@ export class LeftDrawer extends React.PureComponent {
       <ListItem
         key={page.route}
         button
-        selected={this.props.pathname === page.route}
+        selected={this.props.location.pathname === page.route}
         onClick={() => this.props.dispatch(push(page.route))}
       >
         <ListItemIcon>{page.icon}</ListItemIcon>
@@ -64,7 +64,7 @@ export class LeftDrawer extends React.PureComponent {
 LeftDrawer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  pathname: PropTypes.string.isRequired,
+  location: PropTypes.any.isRequired,
   pages: PropTypes.array.isRequired,
   width: PropTypes.number.isRequired,
   open: PropTypes.bool.isRequired,
@@ -73,7 +73,6 @@ LeftDrawer.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   leftDrawer: makeSelectLeftDrawer(),
-  pathname: makeSelectPathname(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -95,4 +94,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
+  withRouter,
 )(LeftDrawer);

@@ -8,6 +8,7 @@
  */
 
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -124,5 +125,9 @@ const withReducer = injectReducer({ key: 'app', reducer });
 
 export default compose(
   withReducer,
+  // important to include withRouter before withConnect
+  // otherwise route changes will not result in the
+  // switch being re-rendered
+  withRouter,
   withConnect,
 )(App);
