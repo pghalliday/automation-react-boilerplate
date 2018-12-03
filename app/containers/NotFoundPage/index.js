@@ -12,15 +12,17 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import Typography from '@material-ui/core/Typography';
+
 import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NotFound extends React.PureComponent {
   render() {
     return (
-      <h1>
+      <Typography variant="h4" gutterBottom component="h2">
         <FormattedMessage {...messages.header} />
-      </h1>
+      </Typography>
     );
   }
 }

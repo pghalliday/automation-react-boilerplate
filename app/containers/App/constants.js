@@ -8,3 +8,9 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+export const TOGGLE_DRAWER_OPEN = 'app/App/TOGGLE_DRAWER_OPEN';
+export const IS_DRAWER_OPEN_DEFAULT = false;
+export const DRAWER_WIDTH = 240;
+export const HOME_ROUTE = '/';
+export const OTHER_ROUTE = '/other';

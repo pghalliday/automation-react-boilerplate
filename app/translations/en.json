@@ -1,1 +1,8 @@
-[]
+{
+  "app.containers.App.homeTitle": "Home",
+  "app.containers.App.otherTitle": "Other",
+  "app.containers.TopAppBar.title": "Automation",
+  "app.containers.HomePage.header": "Home **",
+  "app.containers.OtherPage.header": "Other **",
+  "app.containers.NotFoundPage.header": "Unknown Page"
+}

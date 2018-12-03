@@ -5,6 +5,9 @@
  * code.
  */
 
+// Roboto font for material-ui
+import 'typeface-roboto';
+
 // Needed for redux-saga es6 generator support
 import '@babel/polyfill';
 

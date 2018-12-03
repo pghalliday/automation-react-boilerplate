@@ -42,10 +42,40 @@ module.exports = options => ({
         use: ['style-loader', 'css-loader'],
       },
       {
+        // Preprocess our own .less files
+        test: /\.less/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'less-loader',
+        ],
+      },
+      {
         // Preprocess 3rd party .css files located in node_modules
         test: /\.css$/,
         include: /node_modules/,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        // Preprocess 3rd party .less files located in node_modules
+        test: /\.less/,
+        include: /node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'less-loader',
+        ],
       },
       {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
