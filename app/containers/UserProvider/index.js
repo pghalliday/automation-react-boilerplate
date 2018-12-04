@@ -13,28 +13,34 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectLoginState } from './selectors';
+import { loginAction, logoutAction } from './actions';
 import reducer from './reducer';
 import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
 export class UserProvider extends React.PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     loginState: PropTypes.any.isRequired,
     children: PropTypes.node.isRequired,
   };
 
   static contextTypes = {
+    login: PropTypes.func,
+    logout: PropTypes.func,
     loginState: PropTypes.any,
   };
 
   static childContextTypes = {
+    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     loginState: PropTypes.any.isRequired,
   };
 
   getChildContext() {
-    const { loginState } = this.props;
-    return { loginState };
+    const { loginState, login, logout } = this.props;
+    return { loginState, login, logout };
   }
 
   render() {
@@ -49,7 +55,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    login: () => dispatch(loginAction()),
+    logout: () => dispatch(logoutAction()),
   };
 }
 

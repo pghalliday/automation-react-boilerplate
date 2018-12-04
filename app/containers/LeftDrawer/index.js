@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { withRouter } from 'react-router';
-import { push } from 'connected-react-router';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -37,7 +36,7 @@ export class LeftDrawer extends React.PureComponent {
         key={page.route}
         button
         selected={this.props.location.pathname === page.route}
-        onClick={() => this.props.pushPage(page)}
+        onClick={() => this.props.history.push(page.route)}
       >
         <ListItemIcon>{page.icon}</ListItemIcon>
         <ListItemText primary={this.props.intl.formatMessage(page.name)} />
@@ -62,9 +61,9 @@ export class LeftDrawer extends React.PureComponent {
 }
 
 LeftDrawer.propTypes = {
-  pushPage: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   location: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired,
   pages: PropTypes.array.isRequired,
   width: PropTypes.number.isRequired,
   open: PropTypes.bool.isRequired,
@@ -77,7 +76,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    pushPage: page => dispatch(push(page.route)),
+    dispatch,
   };
 }
 

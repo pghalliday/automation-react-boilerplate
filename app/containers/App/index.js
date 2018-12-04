@@ -29,11 +29,9 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import LayersIcon from '@material-ui/icons/Layers';
 import AppBarSpacerDiv from 'components/AppBarSpacerDiv';
-import UserProvider from 'containers/UserProvider';
 
-import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { loginAction, logoutAction } from 'containers/UserProvider/actions';
+import withUser from '../../utils/withUser';
 import { toggleDrawerOpenAction } from './actions';
 import { makeSelectIsDrawerOpen } from './selectors';
 import reducer from './reducer';
@@ -77,28 +75,27 @@ export class App extends React.PureComponent {
     routes.push(<Route key="" path="" component={NotFoundPage} />);
     return (
       <ThemeProvider theme={theme}>
-        <UserProvider>
-          <RootDiv>
-            <CssBaseline />
-            <TopAppBar
-              shift={DRAWER_WIDTH}
-              shifted={this.props.isDrawerOpen}
-              onMenuClick={this.props.toggleDrawerOpen}
-              onLoginClick={this.props.login}
-              onLogoutClick={this.props.logout}
-            />
-            <LeftDrawer
-              pages={pages}
-              width={DRAWER_WIDTH}
-              open={this.props.isDrawerOpen}
-              onCloseClick={this.props.toggleDrawerOpen}
-            />
-            <ContentMain>
-              <AppBarSpacerDiv />
-              <Switch>{routes}</Switch>
-            </ContentMain>
-          </RootDiv>
-        </UserProvider>
+        <RootDiv>
+          <CssBaseline />
+          <TopAppBar
+            shift={DRAWER_WIDTH}
+            shifted={this.props.isDrawerOpen}
+            onMenuClick={this.props.toggleDrawerOpen}
+            loginState={this.props.loginState}
+            login={this.props.login}
+            logout={this.props.logout}
+          />
+          <LeftDrawer
+            pages={pages}
+            width={DRAWER_WIDTH}
+            open={this.props.isDrawerOpen}
+            onCloseClick={this.props.toggleDrawerOpen}
+          />
+          <ContentMain>
+            <AppBarSpacerDiv />
+            <Switch>{routes}</Switch>
+          </ContentMain>
+        </RootDiv>
       </ThemeProvider>
     );
   }
@@ -107,6 +104,7 @@ export class App extends React.PureComponent {
 App.propTypes = {
   isDrawerOpen: PropTypes.bool,
   toggleDrawerOpen: PropTypes.func,
+  loginState: PropTypes.any,
   login: PropTypes.func,
   logout: PropTypes.func,
 };
@@ -118,8 +116,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     toggleDrawerOpen: () => dispatch(toggleDrawerOpenAction()),
-    login: () => dispatch(loginAction()),
-    logout: () => dispatch(logoutAction()),
   };
 }
 
@@ -135,6 +131,7 @@ export default compose(
   // important to include withRouter before withConnect
   // otherwise route changes will not result in the
   // switch being re-rendered
+  withUser,
   withRouter,
   withConnect,
 )(App);

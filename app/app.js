@@ -15,9 +15,11 @@ import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router/immutable';
-import history from 'utils/history';
+import { BrowserRouter } from 'react-router-dom';
 import 'sanitize.css/sanitize.css';
+
+// Import the UserProvider
+import UserProvider from 'containers/UserProvider';
 
 // Import root app
 import App from 'containers/App';
@@ -36,18 +38,20 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-// Create redux store with history
+// Create redux store
 const initialState = {};
-const store = configureStore(initialState, history);
+const store = configureStore(initialState);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
+        <UserProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </UserProvider>
       </LanguageProvider>
     </Provider>,
     MOUNT_NODE,
