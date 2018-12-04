@@ -12,9 +12,7 @@ const selectUserProviderDomain = state =>
  * Other specific selectors
  */
 
-const makeSelectLoginState = () =>
-  createSelector(selectUserProviderDomain, substate =>
-    substate.get('loginState'),
-  );
+const makeSelectUserProvider = () =>
+  createSelector(selectUserProviderDomain, substate => substate.toJS());
 
-export { makeSelectLoginState };
+export { makeSelectUserProvider };

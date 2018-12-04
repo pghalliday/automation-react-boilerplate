@@ -8,20 +8,15 @@ const withUser = Component => {
     static contextTypes = {
       login: PropTypes.func.isRequired,
       logout: PropTypes.func.isRequired,
-      loginState: PropTypes.any.isRequired,
+      user: PropTypes.any.isRequired,
     };
 
     static displayName = `withUser(${Component.displayName || Component.name})`;
 
     render() {
-      const { loginState, login, logout } = this.context;
+      const { user, login, logout } = this.context;
       return (
-        <Component
-          {...this.props}
-          loginState={loginState}
-          login={login}
-          logout={logout}
-        />
+        <Component {...this.props} user={user} login={login} logout={logout} />
       );
     }
   }

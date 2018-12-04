@@ -12,7 +12,7 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectLoginState } from './selectors';
+import { makeSelectUserProvider } from './selectors';
 import { loginAction, logoutAction } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -22,25 +22,25 @@ export class UserProvider extends React.PureComponent {
   static propTypes = {
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    loginState: PropTypes.any.isRequired,
+    user: PropTypes.any.isRequired,
     children: PropTypes.node.isRequired,
   };
 
   static contextTypes = {
     login: PropTypes.func,
     logout: PropTypes.func,
-    loginState: PropTypes.any,
+    user: PropTypes.any,
   };
 
   static childContextTypes = {
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    loginState: PropTypes.any.isRequired,
+    user: PropTypes.any.isRequired,
   };
 
   getChildContext() {
-    const { loginState, login, logout } = this.props;
-    return { loginState, login, logout };
+    const { user, login, logout } = this.props;
+    return { user, login, logout };
   }
 
   render() {
@@ -50,7 +50,7 @@ export class UserProvider extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-  loginState: makeSelectLoginState(),
+  user: makeSelectUserProvider(),
 });
 
 function mapDispatchToProps(dispatch) {

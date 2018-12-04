@@ -4,7 +4,14 @@
  *
  */
 
-import { LOGIN, LOGOUT, SET_LOGIN_STATE } from './constants';
+import { LOGIN, LOGOUT, SET_LOGIN_STATE, SET_PROFILE } from './constants';
+
+export function setProfileAction(profile) {
+  return {
+    type: SET_PROFILE,
+    profile,
+  };
+}
 
 export function setLoginStateAction(loginState) {
   return {

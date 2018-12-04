@@ -31,7 +31,7 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AppBarSpacerDiv from 'components/AppBarSpacerDiv';
 
 import injectReducer from 'utils/injectReducer';
-import withUser from '../../utils/withUser';
+import withUser from 'containers/UserProvider/withUser';
 import { toggleDrawerOpenAction } from './actions';
 import { makeSelectIsDrawerOpen } from './selectors';
 import reducer from './reducer';
@@ -81,7 +81,7 @@ export class App extends React.PureComponent {
             shift={DRAWER_WIDTH}
             shifted={this.props.isDrawerOpen}
             onMenuClick={this.props.toggleDrawerOpen}
-            loginState={this.props.loginState}
+            loginState={this.props.user.loginState}
             login={this.props.login}
             logout={this.props.logout}
           />
@@ -104,7 +104,7 @@ export class App extends React.PureComponent {
 App.propTypes = {
   isDrawerOpen: PropTypes.bool,
   toggleDrawerOpen: PropTypes.func,
-  loginState: PropTypes.any,
+  user: PropTypes.any,
   login: PropTypes.func,
   logout: PropTypes.func,
 };

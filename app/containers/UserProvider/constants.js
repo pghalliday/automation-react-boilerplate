@@ -13,6 +13,8 @@
 export const LOGIN = 'app/UserProvider/LOGIN';
 export const LOGOUT = 'app/UserProvider/LOGOUT';
 export const SET_LOGIN_STATE = 'app/UserProvider/SET_LOGIN_STATE';
+export const SET_PROFILE = 'app/UserProvider/SET_PROFILE';
 
 // State defaults
 export const LOGIN_STATE_DEFAULT = {};
+export const PROFILE_DEFAULT = {};
