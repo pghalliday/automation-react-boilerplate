@@ -1,6 +1,6 @@
 /*
  *
- * OtherPage actions
+ * SettingsPage actions
  *
  */
 

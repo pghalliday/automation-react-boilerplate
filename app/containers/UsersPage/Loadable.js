@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for OtherPage
+ * Asynchronously loads the component for UsersPage
  *
  */
 

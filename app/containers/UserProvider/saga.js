@@ -1,12 +1,6 @@
 import { call, takeEvery, put, fork, cancel } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
-import {
-  init,
-  subscribeToUserChange,
-  logout,
-  login,
-  test,
-} from '../../utils/gapi';
+import { init, subscribeToUserChange, logout, login } from '../../utils/gapi';
 import {
   initUser,
   subscribeToPermissionsChange,
@@ -47,7 +41,6 @@ export function userChannel() {
 
 export function* setUser({ gapiUser }) {
   if (gapiUser) {
-    yield test();
     const firebaseUser = yield initUser(gapiUser);
     resetCurrentPermissionsWatch(yield fork(permissionsSaga));
     yield put(

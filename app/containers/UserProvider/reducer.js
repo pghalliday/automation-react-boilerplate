@@ -29,10 +29,7 @@ function userProviderReducer(state = initialState, action) {
     case SET_LOGGED_OUT:
       return loggedOutState;
     case SET_LOGGED_IN:
-      return fromJS({
-        ...loggedOutState,
-        ...action.payload,
-      });
+      return loggedOutState.merge(action.users);
     case SET_PERMISSIONS:
       return state.set('permissions', fromJS(action.permissions));
     default:

@@ -2,9 +2,9 @@
 // import { mount } from 'enzyme';
 // import { enzymeFind } from 'styled-components/test-utils';
 
-// import { OtherPage } from '../index';
+// import { SettingsPage } from '../index';
 
-describe('<OtherPage />', () => {
+describe('<SettingsPage />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

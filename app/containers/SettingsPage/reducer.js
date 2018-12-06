@@ -1,6 +1,6 @@
 /*
  *
- * OtherPage reducer
+ * SettingsPage reducer
  *
  */
 
@@ -9,7 +9,7 @@ import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({});
 
-function otherPageReducer(state = initialState, action) {
+function settingsPageReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -18,4 +18,4 @@ function otherPageReducer(state = initialState, action) {
   }
 }
 
-export default otherPageReducer;
+export default settingsPageReducer;

@@ -18,4 +18,5 @@ export const IS_DRAWER_OPEN_DEFAULT = false;
 // Other constants
 export const DRAWER_WIDTH = 240;
 export const HOME_ROUTE = '/';
-export const OTHER_ROUTE = '/other';
+export const SETTINGS_ROUTE = '/settings';
+export const USERS_ROUTE = '/users';

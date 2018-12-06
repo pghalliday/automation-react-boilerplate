@@ -5,7 +5,7 @@ isLoggedIn(uid) { auth != null && auth.uid == uid }
 isActive(uid) { isLoggedIn(uid) && prior(root).permissions[auth.uid].active }
 
 // Is the logged in user admin
-isAdmin() { auth != null && prior(root).permissions[auth.uid].admin }
+isAdmin() { prior(root).permissions[auth.uid].active && auth != null && prior(root).permissions[auth.uid].admin }
 
 // Is logged in user active or admin
 isLoggedInOrAdmin(uid) { isLoggedIn(uid) || isAdmin() }

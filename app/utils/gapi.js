@@ -4,7 +4,7 @@ import {
   GAPI_LOAD_TIMEOUT,
   FIREBASE_API_KEY,
   FIREBASE_CLIENT_ID,
-} from '../constants';
+} from './constants';
 
 const scope = 'https://www.googleapis.com/auth/analytics.readonly';
 

@@ -1,6 +1,6 @@
 /**
  *
- * HomePage
+ * SettingsPage
  *
  */
 
@@ -15,13 +15,13 @@ import Typography from '@material-ui/core/Typography';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectHomePage from './selectors';
+import makeSelectSettingsPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
-export class HomePage extends React.PureComponent {
+export class SettingsPage extends React.PureComponent {
   render() {
     return (
       <Typography variant="h4" gutterBottom component="h2">
@@ -31,13 +31,13 @@ export class HomePage extends React.PureComponent {
   }
 }
 
-HomePage.propTypes = {
+SettingsPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   title: PropTypes.any.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  homePage: makeSelectHomePage(),
+  settingsPage: makeSelectSettingsPage(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -51,11 +51,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'homePage', reducer });
-const withSaga = injectSaga({ key: 'homePage', saga });
+const withReducer = injectReducer({ key: 'settingsPage', reducer });
+const withSaga = injectSaga({ key: 'settingsPage', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(HomePage);
+)(SettingsPage);

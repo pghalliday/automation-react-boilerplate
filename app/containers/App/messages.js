@@ -13,8 +13,12 @@ export default defineMessages({
     id: `${scope}.homeTitle`,
     defaultMessage: 'This is the home title!',
   },
-  otherTitle: {
-    id: `${scope}.otherTitle`,
-    defaultMessage: 'This is the other title!',
+  settingsTitle: {
+    id: `${scope}.settingsTitle`,
+    defaultMessage: 'This is the settings title!',
+  },
+  usersTitle: {
+    id: `${scope}.usersTitle`,
+    defaultMessage: 'This is the users title!',
   },
 });

@@ -26,10 +26,10 @@ export function setPermissionsAction(permissions) {
   };
 }
 
-export function setLoggedInAction(payload) {
+export function setLoggedInAction(users) {
   return {
     type: SET_LOGGED_IN,
-    payload,
+    users,
   };
 }
 
