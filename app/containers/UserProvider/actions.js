@@ -4,19 +4,38 @@
  *
  */
 
-import { LOGIN, LOGOUT, SET_LOGIN_STATE, SET_PROFILE } from './constants';
+import {
+  LOGIN,
+  LOGOUT,
+  SET_PENDING,
+  SET_LOGGED_IN,
+  SET_LOGGED_OUT,
+  SET_PERMISSIONS,
+} from './constants';
 
-export function setProfileAction(profile) {
+export function setLoggedOutAction() {
   return {
-    type: SET_PROFILE,
-    profile,
+    type: SET_LOGGED_OUT,
   };
 }
 
-export function setLoginStateAction(loginState) {
+export function setPermissionsAction(permissions) {
   return {
-    type: SET_LOGIN_STATE,
-    loginState,
+    type: SET_PERMISSIONS,
+    permissions,
+  };
+}
+
+export function setLoggedInAction(payload) {
+  return {
+    type: SET_LOGGED_IN,
+    payload,
+  };
+}
+
+export function setPendingAction() {
+  return {
+    type: SET_PENDING,
   };
 }
 

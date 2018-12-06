@@ -6,23 +6,35 @@
 
 import { fromJS } from 'immutable';
 import {
-  SET_LOGIN_STATE,
-  LOGIN_STATE_DEFAULT,
-  SET_PROFILE,
-  PROFILE_DEFAULT,
+  SET_PENDING,
+  SET_LOGGED_IN,
+  SET_LOGGED_OUT,
+  SET_PERMISSIONS,
 } from './constants';
 
 export const initialState = fromJS({
-  loginState: LOGIN_STATE_DEFAULT,
-  profile: PROFILE_DEFAULT,
+  pending: true,
+  permissions: {},
+});
+
+const loggedOutState = fromJS({
+  pending: false,
+  permissions: {},
 });
 
 function userProviderReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_LOGIN_STATE:
-      return state.set('loginState', action.loginState);
-    case SET_PROFILE:
-      return state.set('profile', action.profile);
+    case SET_PENDING:
+      return initialState;
+    case SET_LOGGED_OUT:
+      return loggedOutState;
+    case SET_LOGGED_IN:
+      return fromJS({
+        ...loggedOutState,
+        ...action.payload,
+      });
+    case SET_PERMISSIONS:
+      return state.set('permissions', fromJS(action.permissions));
     default:
       return state;
   }

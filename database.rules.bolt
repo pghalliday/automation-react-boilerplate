@@ -1,0 +1,58 @@
+// Is the user logged in
+isLoggedIn(uid) { auth != null && auth.uid == uid }
+
+// Is the logged in user active
+isActive(uid) { isLoggedIn(uid) && prior(root).permissions[auth.uid].active }
+
+// Is the logged in user admin
+isAdmin() { auth != null && prior(root).permissions[auth.uid].admin }
+
+// Is logged in user active or admin
+isLoggedInOrAdmin(uid) { isLoggedIn(uid) || isAdmin() }
+
+// Is logged in user active or admin
+isActiveOrAdmin(uid) { isActive(uid) || isAdmin() }
+
+type Permissions {
+  active: Permission | Null,
+  admin: Permission | Null
+}
+
+type Permission extends Boolean {
+  validate() { isAdmin() || !this }
+}
+
+type GoogleAnalyticsView {
+  name: String,
+  id: String
+}
+
+path / {
+  read() { false }
+  write() { false }
+}
+
+path /sessions {
+  read() { false }
+  write() { false }
+}
+
+path /permissions {
+  read() { isAdmin() }
+  write() { isAdmin() }
+}
+
+path /permissions/{uid} is Permissions {
+  read() { isLoggedInOrAdmin(uid) }
+  write() { isLoggedInOrAdmin(uid) }
+}
+
+path /googleAnalyticsViews {
+  read() { isAdmin() }
+  write() { isAdmin() }
+}
+
+path /googleAnalyticsViews/{uid} is GoogleAnalyticsView[] {
+  read() { isActiveOrAdmin(uid) }
+  write() { isActiveOrAdmin(uid) }
+}

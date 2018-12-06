@@ -12,9 +12,7 @@
 // Actions
 export const LOGIN = 'app/UserProvider/LOGIN';
 export const LOGOUT = 'app/UserProvider/LOGOUT';
-export const SET_LOGIN_STATE = 'app/UserProvider/SET_LOGIN_STATE';
-export const SET_PROFILE = 'app/UserProvider/SET_PROFILE';
-
-// State defaults
-export const LOGIN_STATE_DEFAULT = {};
-export const PROFILE_DEFAULT = {};
+export const SET_PENDING = 'app/UserProvider/SET_PENDING';
+export const SET_LOGGED_OUT = 'app/UserProvider/SET_LOGGED_OUT';
+export const SET_LOGGED_IN = 'app/UserProvider/SET_LOGGED_IN';
+export const SET_PERMISSIONS = 'app/UserProvider/SET_PERMISSIONS';

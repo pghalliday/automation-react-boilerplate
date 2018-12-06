@@ -1,43 +1,61 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID,
+} from './constants';
+
+const INITIAL_PERMISSIONS = {
+  active: false,
+  admin: false,
+};
 
 export const app = firebase.initializeApp({
-  apiKey: 'AIzaSyA-KFUvyX_CIWH1_FJkasrBCcbpLV7Bx_A',
-  authDomain: 'north-catch-automation.firebaseapp.com',
-  databaseURL: 'https://north-catch-automation.firebaseio.com',
-  projectId: 'north-catch-automation',
-  storageBucket: 'north-catch-automation.appspot.com',
-  messagingSenderId: '154446626428',
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  databaseURL: FIREBASE_DATABASE_URL,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
 });
-
-export const subscribeToAuthStateChange = callback => {
-  // wrap the callback so that the returned unsubscribe
-  // is guaranteed to be unsubscribing a unique listener
-  const listener = (...args) => callback(...args);
-  return firebase.auth().onAuthStateChanged(listener);
-};
 
 export const logout = () => firebase.auth().signOut();
 
-export const login = () =>
-  firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-
-export const initUser = user => {
-  const userRef = firebase.database().ref(`users/${user.uid}`);
-  return userRef
-    .once('value')
-    .then(
-      snapshot =>
-        snapshot.val() === null ? userRef.update({ '/approved': false }) : '',
-    );
+export const initUser = gapiUser => {
+  const idToken = gapiUser.getAuthResponse().id_token;
+  const creds = firebase.auth.GoogleAuthProvider.credential(idToken);
+  return firebase
+    .auth()
+    .signInWithCredential(creds)
+    .then(user => {
+      const ref = firebase.database().ref(`permissions/${user.uid}`);
+      return ref
+        .once('value')
+        .then(
+          snapshot =>
+            snapshot.val() === null ? ref.set(INITIAL_PERMISSIONS) : '',
+        )
+        .then(() => user);
+    });
 };
 
-export const subscribeToProfileChange = (user, callback) => {
-  const userRef = firebase.database().ref(`users/${user.uid}`);
-  // wrap the callback so that the returned unsubscribe
-  // is guaranteed to be unsubscribing a unique listener
-  const listener = (...args) => callback(...args);
-  userRef.on('value', listener);
-  return () => userRef.off('value', listener);
+export const subscribeToPermissionsChange = callback => {
+  const user = firebase.auth().currentUser;
+  const ref = firebase.database().ref(`permissions/${user.uid}`);
+  const listener = snapshot => callback(snapshot.val() || {});
+  ref.on('value', listener);
+  return () => ref.off('value', listener);
+};
+
+export const subscribeToGoogleAnalyticsViewsChange = callback => {
+  const user = firebase.auth().currentUser;
+  const ref = firebase.database().ref(`googleAnalyticsViews/${user.uid}`);
+  const listener = snapshot => callback(snapshot.val() || {});
+  ref.on('value', listener);
+  return () => ref.off('value', listener);
 };

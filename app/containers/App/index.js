@@ -81,7 +81,7 @@ export class App extends React.PureComponent {
             shift={DRAWER_WIDTH}
             shifted={this.props.isDrawerOpen}
             onMenuClick={this.props.toggleDrawerOpen}
-            loginState={this.props.user.loginState}
+            user={this.props.user}
             login={this.props.login}
             logout={this.props.logout}
           />

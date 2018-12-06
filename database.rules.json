@@ -1,22 +1,42 @@
 {
   "rules": {
-    ".read": false,
-    ".write": false,
-    "sessions": {
-      ".read": false,
-      ".write": false
-    },
-    "users": {
-      "$user_id": {
-        ".read": "$user_id === auth.uid",
-        ".write": "$user_id === auth.uid",
-        ".validate": "newData.hasChildren(['approved'])",
-        "approved": {
-          ".validate": "newData.val() === false"
+    "permissions": {
+      ".read": "(auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true)",
+      ".write": "(auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true)",
+      "$uid": {
+        ".validate": "newData.hasChildren()",
+        "active": {
+          ".validate": "(newData.isBoolean() && ((auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true) || !(newData.val() == true)))"
+        },
+        "admin": {
+          ".validate": "(newData.isBoolean() && ((auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true) || !(newData.val() == true)))"
         },
         "$other": {
-          ".validate": false
-        }
+          ".validate": "false"
+        },
+        ".read": "((auth != null && auth.uid == $uid) || (auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true))",
+        ".write": "((auth != null && auth.uid == $uid) || (auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true))"
+      }
+    },
+    "googleAnalyticsViews": {
+      ".read": "(auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true)",
+      ".write": "(auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true)",
+      "$uid": {
+        "$key1": {
+          ".validate": "newData.hasChildren(['name', 'id'])",
+          "name": {
+            ".validate": "newData.isString()"
+          },
+          "id": {
+            ".validate": "newData.isString()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        },
+        ".validate": "newData.hasChildren()",
+        ".read": "(((auth != null && auth.uid == $uid) && root.child('permissions').child(auth.uid).child('active').val() == true) || (auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true))",
+        ".write": "(((auth != null && auth.uid == $uid) && root.child('permissions').child(auth.uid).child('active').val() == true) || (auth != null && root.child('permissions').child(auth.uid).child('admin').val() == true))"
       }
     }
   }

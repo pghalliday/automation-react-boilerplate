@@ -16,7 +16,6 @@ import TitleTypography from 'components/TitleTypography';
 import IconButton from '@material-ui/core/IconButton';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Tooltip from '@material-ui/core/Tooltip';
-import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -25,15 +24,6 @@ import messages from './messages';
 /* eslint-disable react/prefer-stateless-function */
 export class TopAppBar extends React.PureComponent {
   render() {
-    const loginErrorButton = () => (
-      <Tooltip title={this.props.intl.formatMessage(messages.login)}>
-        <IconButton color="inherit" onClick={this.props.login}>
-          <Badge badgeContent="!" color="secondary">
-            <PersonOutlineIcon />
-          </Badge>
-        </IconButton>
-      </Tooltip>
-    );
     const pendingIcon = <CircularProgress color="secondary" />;
     const loginButton = (
       <Tooltip title={this.props.intl.formatMessage(messages.login)}>
@@ -51,17 +41,14 @@ export class TopAppBar extends React.PureComponent {
         <Avatar src={user.photoURL} onClick={this.props.logout} />
       </Tooltip>
     );
-    const userIcon = loginState => {
-      if (loginState.error) {
-        return loginErrorButton(loginState.error);
+    const userIcon = user => {
+      if (user.pending) {
+        return pendingIcon;
       }
-      if (loginState.user) {
-        return logoutButton(loginState.user);
+      if (user.firebaseUser) {
+        return logoutButton(user.firebaseUser);
       }
-      if (loginState.loggedOut) {
-        return loginButton;
-      }
-      return pendingIcon;
+      return loginButton;
     };
     return (
       <ShiftingAppBar
@@ -81,7 +68,7 @@ export class TopAppBar extends React.PureComponent {
           <TitleTypography component="h1" variant="h6" color="inherit" noWrap>
             <FormattedMessage {...messages.title} />
           </TitleTypography>
-          {userIcon(this.props.loginState)}
+          {userIcon(this.props.user)}
         </StyledToolbar>
       </ShiftingAppBar>
     );
@@ -92,7 +79,7 @@ TopAppBar.propTypes = {
   intl: intlShape.isRequired,
   shifted: PropTypes.bool,
   shift: PropTypes.number,
-  loginState: PropTypes.any,
+  user: PropTypes.any,
   login: PropTypes.func,
   logout: PropTypes.func,
   onMenuClick: PropTypes.func,
