@@ -27,3 +27,9 @@ To deploy to firebase
 ```
 npm run deploy
 ```
+
+To deploy only new database rules
+
+```
+npm run deploy:rules
+```
