@@ -11,5 +11,6 @@ npm-debug.log
 
 # firebase
 firebase-debug.log
+firestore-debug.log
 .firebase/
 database.rules.json

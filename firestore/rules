@@ -1,0 +1,43 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // by default there should be no read or write access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isUser(uid) {
+      return request.auth.uid == uid;
+    }
+
+    // Check that a document has all of the given fields
+    function hasAllFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+    
+    // Check that a document has only the given fields
+    function hasOnlyFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+    
+    // Check that a document has any of the given fields
+    function hasAnyFields(fields) {
+      return request.resource.data.keys().hasAny(fields);
+    }
+    
+    // Check that a document has only the given fields
+    function hasAllAndOnlyFields(fields) {
+      return hasAllFields(fields) && hasOnlyFields(fields);
+    }
+    
+    // Validate that a document is a valid user
+    function isTypeUser() {
+      return hasAllAndOnlyFields(['name', 'email']);
+    }
+
+    match /users/{uid} {
+      allow create: if isTypeUser();
+      allow update: if isTypeUser();
+    }
+  }
+}
